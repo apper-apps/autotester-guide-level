@@ -2,57 +2,63 @@
   {
     "Id": 1,
     "number": 1,
-    "title": "Install AutoTester",
-    "description": "Download and install AutoTester CLI tool globally on your system. This will give you access to all AutoTester commands and features.",
+    "title": "Create Your Project & Record Complete Feature Flow",
+    "description": "Install the Chrome Extension and create a new project. Then record your complete user journey by interacting with your web application.",
     "subSteps": [
-      "Open your terminal or command prompt",
-      "Run the installation command below",
-      "Verify the installation was successful",
-      "Check the version to confirm it's working"
+      "Install Chrome Extension with clickable link to Chrome Web Store",
+      "Create new project (recording name, app URL, description)",
+      "✅ Click on ALL necessary fields (required and optional)",
+      "✅ Fill out forms completely",
+      "✅ Navigate through entire user journey",
+      "✅ Include success/error scenarios",
+      "✅ Interact with all UI elements"
     ],
-    "codeExample": "npm install -g autotester-cli\nautotester --version",
-    "timeEstimate": "2-3 minutes"
+    "codeExample": "# Pro tip: The more complete your recording, the better AI can understand your app and generate comprehensive test cases",
+    "timeEstimate": "5-7 minutes"
   },
   {
     "Id": 2,
     "number": 2,
-    "title": "Initialize Your Project",
-    "description": "Set up AutoTester in your project directory. This creates the necessary configuration files and folder structure for your test automation.",
+    "title": "AI Analyzes Your Recording",
+    "description": "AutoTester's AI engine analyzes your recorded interactions to understand your application's behavior, UI patterns, and user workflows.",
     "subSteps": [
-      "Navigate to your project root directory",
-      "Run the initialization command",
-      "Follow the interactive setup prompts",
-      "Review the generated configuration files"
+      "AI processes your recorded user interactions",
+      "Identifies form fields, buttons, and navigation patterns",
+      "Maps out user workflows and business logic",
+      "Detects validation rules and error scenarios",
+      "Understands application structure and dependencies"
     ],
-    "codeExample": "cd your-project-directory\nautotester init\n# Follow the prompts to configure your project",
-    "timeEstimate": "5-7 minutes"
+    "codeExample": "# AI automatically detects:\n# - Form validations\n# - Navigation flows\n# - Error handling\n# - Success scenarios",
+    "timeEstimate": "1-2 minutes"
   },
   {
     "Id": 3,
     "number": 3,
-    "title": "Configure API Settings",
-    "description": "Connect AutoTester to your testing environment by configuring API endpoints, authentication, and environment variables.",
+    "title": "Generate Comprehensive Test Cases",
+    "description": "Based on your recording, AutoTester generates multiple test scenarios covering positive cases, edge cases, and error conditions.",
     "subSteps": [
-      "Open the generated config file in your editor",
-      "Add your API endpoints and credentials",
-      "Set up environment-specific configurations",
-      "Test the connection to verify everything works"
+      "AI generates positive test cases for happy paths",
+      "Creates edge case scenarios for boundary testing",
+      "Generates error condition tests for validation",
+      "Produces accessibility and usability tests",
+      "Creates performance and load test suggestions"
     ],
-    "codeExample": "# Edit autotester.config.js\nexport default {\n  apiEndpoint: 'https://api.yourservice.com',\n  authToken: process.env.AUTH_TOKEN,\n  environment: 'development'\n}",
-    "timeEstimate": "10-15 minutes"
+    "codeExample": "# Generated test types:\n# - Happy path tests\n# - Validation tests\n# - Error handling tests\n# - Edge case scenarios",
+    "timeEstimate": "2-3 minutes"
   },
   {
     "Id": 4,
     "number": 4,
-    "title": "Run Your First Test",
-    "description": "Execute your first automated test to verify everything is working correctly. AutoTester will analyze your test scenarios and provide intelligent suggestions.",
+    "title": "Review & Execute Tests",
+    "description": "Review the generated test cases, customize as needed, and execute them to validate your application's functionality.",
     "subSteps": [
-      "Create a simple test case in the tests directory",
-      "Run the test using AutoTester CLI",
-      "Review the test results and AI insights",
-      "Iterate and improve based on recommendations"
+      "Review AI-generated test cases and scenarios",
+      "Customize test parameters and expected outcomes",
+      "Execute tests individually or as a complete suite",
+      "Analyze test results and failure reports",
+      "Schedule automated test runs for continuous testing"
     ],
-    "codeExample": "autotester run --test=welcome\n# Or run all tests\nautotester run --all",
+    "codeExample": "# Execute tests:\n# - Run individual test cases\n# - Execute full test suite\n# - Schedule automated runs\n# - Generate reports",
     "timeEstimate": "5-10 minutes"
   }
 ]

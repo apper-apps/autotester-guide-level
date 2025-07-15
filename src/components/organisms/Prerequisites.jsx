@@ -8,8 +8,8 @@ const Prerequisites = ({ prerequisites }) => {
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto px-4">
-        <SectionHeader
-          title="Before You Begin"
+<SectionHeader
+          title="Before You Start"
           subtitle="Make sure you have these essentials ready before starting the setup process"
           icon="CheckCircle"
         />

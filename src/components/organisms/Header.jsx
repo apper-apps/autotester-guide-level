@@ -28,23 +28,31 @@ const Header = () => {
             <span className="text-white/90 text-lg font-medium">AutoTester</span>
           </motion.div>
           
-          <motion.h1
+<motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-4xl lg:text-6xl font-bold text-white mb-6 font-display"
           >
-            Quick Start Guide
+            AutoTester: Quick Start Guide
           </motion.h1>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-2xl text-white/90 mb-4 font-semibold"
+          >
+            🚀 Get Testing in 4 Clicks
+          </motion.div>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed"
           >
-            Get up and running with AI-powered testing automation in minutes. 
-            Follow our step-by-step guide to transform your testing workflow.
+            Transform your testing from days to minutes with AI-powered automation
           </motion.p>
         </div>
       </div>

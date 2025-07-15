@@ -10,8 +10,8 @@ const StepsList = ({ steps }) => {
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
-        <SectionHeader
-          title="Setup Steps"
+<SectionHeader
+          title="Main Steps"
           subtitle="Follow these 4 simple steps to get AutoTester running in your environment"
           icon="PlayCircle"
         />

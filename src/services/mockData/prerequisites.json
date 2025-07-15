@@ -1,20 +1,20 @@
 [
   {
     "Id": 1,
-    "title": "Node.js & npm",
-    "description": "Node.js version 16 or higher with npm package manager installed on your system. This is required to install and run AutoTester dependencies.",
-    "icon": "Package"
+    "title": "✅ Chrome Browser Required",
+    "description": "AutoTester currently supports Chrome only. Make sure you have Chrome browser installed and ready to use.",
+    "icon": "Chrome"
   },
   {
     "Id": 2,
-    "title": "API Access",
-    "description": "Valid API credentials for your testing environment. You'll need authentication tokens or API keys to connect AutoTester to your services.",
-    "icon": "Key"
+    "title": "✅ Your Web App URL",
+    "description": "Have the application you want to test ready and accessible. You'll need the URL of your web application to start recording.",
+    "icon": "Globe"
   },
   {
     "Id": 3,
-    "title": "Project Setup",
-    "description": "An existing project with test scenarios ready for automation. AutoTester works best with well-structured test cases and clear requirements.",
-    "icon": "FolderOpen"
+    "title": "✅ 15 Minutes",
+    "description": "That's all you need to create your first test. Set aside 15 minutes to complete the entire setup and recording process.",
+    "icon": "Clock"
   }
 ]
