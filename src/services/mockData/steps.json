@@ -2,18 +2,19 @@
   {
     "Id": 1,
     "number": 1,
-    "title": "Create Your Project & Record Complete Feature Flow",
-    "description": "Install the Chrome Extension and create a new project. Then record your complete user journey by interacting with your web application.",
+"title": "Create Your Project & Record Complete Feature Flow",
+    "description": "Install Chrome Extension with clickable link to Chrome Web Store. Create new project requirements (recording name, app URL, description). Follow detailed recording guidelines with checkmarks for comprehensive coverage.",
     "subSteps": [
       "Install Chrome Extension with clickable link to Chrome Web Store",
-      "Create new project (recording name, app URL, description)",
+      "Create new project requirements (recording name, app URL, description)",
+      "Detailed recording guidelines with checkmarks:",
       "✅ Click on ALL necessary fields (required and optional)",
       "✅ Fill out forms completely",
       "✅ Navigate through entire user journey",
       "✅ Include success/error scenarios",
       "✅ Interact with all UI elements"
     ],
-    "codeExample": "# Pro tip: The more complete your recording, the better AI can understand your app and generate comprehensive test cases",
+    "codeExample": "# Pro tip callout box: \"The more complete your recording, the better AI can understand your app and generate comprehensive test cases\"",
     "timeEstimate": "5-7 minutes"
   },
   {
