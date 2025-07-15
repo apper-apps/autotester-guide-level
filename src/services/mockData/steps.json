@@ -1,0 +1,58 @@
+[
+  {
+    "Id": 1,
+    "number": 1,
+    "title": "Install AutoTester",
+    "description": "Download and install AutoTester CLI tool globally on your system. This will give you access to all AutoTester commands and features.",
+    "subSteps": [
+      "Open your terminal or command prompt",
+      "Run the installation command below",
+      "Verify the installation was successful",
+      "Check the version to confirm it's working"
+    ],
+    "codeExample": "npm install -g autotester-cli\nautotester --version",
+    "timeEstimate": "2-3 minutes"
+  },
+  {
+    "Id": 2,
+    "number": 2,
+    "title": "Initialize Your Project",
+    "description": "Set up AutoTester in your project directory. This creates the necessary configuration files and folder structure for your test automation.",
+    "subSteps": [
+      "Navigate to your project root directory",
+      "Run the initialization command",
+      "Follow the interactive setup prompts",
+      "Review the generated configuration files"
+    ],
+    "codeExample": "cd your-project-directory\nautotester init\n# Follow the prompts to configure your project",
+    "timeEstimate": "5-7 minutes"
+  },
+  {
+    "Id": 3,
+    "number": 3,
+    "title": "Configure API Settings",
+    "description": "Connect AutoTester to your testing environment by configuring API endpoints, authentication, and environment variables.",
+    "subSteps": [
+      "Open the generated config file in your editor",
+      "Add your API endpoints and credentials",
+      "Set up environment-specific configurations",
+      "Test the connection to verify everything works"
+    ],
+    "codeExample": "# Edit autotester.config.js\nexport default {\n  apiEndpoint: 'https://api.yourservice.com',\n  authToken: process.env.AUTH_TOKEN,\n  environment: 'development'\n}",
+    "timeEstimate": "10-15 minutes"
+  },
+  {
+    "Id": 4,
+    "number": 4,
+    "title": "Run Your First Test",
+    "description": "Execute your first automated test to verify everything is working correctly. AutoTester will analyze your test scenarios and provide intelligent suggestions.",
+    "subSteps": [
+      "Create a simple test case in the tests directory",
+      "Run the test using AutoTester CLI",
+      "Review the test results and AI insights",
+      "Iterate and improve based on recommendations"
+    ],
+    "codeExample": "autotester run --test=welcome\n# Or run all tests\nautotester run --all",
+    "timeEstimate": "5-10 minutes"
+  }
+]

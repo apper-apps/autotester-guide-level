@@ -1,0 +1,44 @@
+[
+  {
+    "Id": 1,
+    "title": "Use Environment Variables",
+    "content": "Store sensitive information like API keys and database credentials in environment variables instead of hardcoding them in your configuration files. This keeps your credentials secure and makes it easy to switch between different environments (development, staging, production).",
+    "category": "security",
+    "icon": "Shield"
+  },
+  {
+    "Id": 2,
+    "title": "Start with Simple Tests",
+    "content": "Begin with basic test cases before moving to complex scenarios. AutoTester's AI learns from your testing patterns, so starting simple helps it understand your project structure and requirements better, leading to more accurate suggestions over time.",
+    "category": "best practices",
+    "icon": "Target"
+  },
+  {
+    "Id": 3,
+    "title": "Leverage AI Suggestions",
+    "content": "Pay attention to AutoTester's AI-generated recommendations for test improvements, edge cases, and optimization opportunities. The AI analyzes your code and testing patterns to suggest relevant test scenarios you might have missed.",
+    "category": "optimization",
+    "icon": "Brain"
+  },
+  {
+    "Id": 4,
+    "title": "Regular Configuration Updates",
+    "content": "Keep your AutoTester configuration up to date as your project evolves. Review and update API endpoints, authentication methods, and test parameters regularly to ensure optimal performance and accuracy.",
+    "category": "maintenance",
+    "icon": "Settings"
+  },
+  {
+    "Id": 5,
+    "title": "Monitor Test Performance",
+    "content": "Use AutoTester's built-in analytics to track test execution times, success rates, and performance trends. This data helps you identify bottlenecks and optimize your testing workflow for better efficiency.",
+    "category": "performance",
+    "icon": "BarChart3"
+  },
+  {
+    "Id": 6,
+    "title": "Collaborate with Team",
+    "content": "Share your AutoTester configuration and test results with your team members. Use version control for your test configurations and establish team conventions for naming tests and organizing test suites.",
+    "category": "collaboration",
+    "icon": "Users"
+  }
+]
