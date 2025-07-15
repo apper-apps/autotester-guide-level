@@ -1,9 +1,9 @@
 [
   {
     "Id": 1,
-    "number": 1,
-"title": "Create Your Project & Record Complete Feature Flow",
-    "description": "Install Chrome Extension with clickable link to Chrome Web Store. Create new project requirements (recording name, app URL, description). Follow detailed recording guidelines with checkmarks for comprehensive coverage.",
+"number": 1,
+    "title": "Create Your Project & Record Complete Feature Flow",
+    "description": "Start by installing the Chrome Extension and setting up your project with all required details. Then record your complete feature workflow following our comprehensive guidelines to ensure AI can generate thorough test cases.",
     "subSteps": [
       "Install Chrome Extension with clickable link to Chrome Web Store",
       "Create new project requirements (recording name, app URL, description)",
