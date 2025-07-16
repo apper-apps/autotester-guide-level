@@ -60,7 +60,7 @@ const StepsList = ({ steps }) => {
                       </p>
                       
                       {/* Enhanced substeps section */}
-                      {step.subSteps && step.subSteps.length > 0 && (
+{step?.subSteps && Array.isArray(step.subSteps) && step.subSteps.length > 0 && (
                         <div className="mb-8">
                           <h4 className="text-lg font-semibold text-gray-900 mb-4 font-display flex items-center gap-2">
                             <span className="w-1 h-6 bg-primary rounded-full"></span>
@@ -68,13 +68,15 @@ const StepsList = ({ steps }) => {
                           </h4>
                           <div className="bg-gray-50 rounded-lg p-6">
                             <ul className="space-y-3">
-                              {step.subSteps.map((subStep, subIndex) => (
-                                <li key={subIndex} className="flex items-start gap-3">
+                              {step.subSteps
+                                .filter(subStep => subStep != null && subStep !== '')
+                                .map((subStep, subIndex) => (
+                                <li key={subStep?.id || subIndex} className="flex items-start gap-3">
                                   <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                     <div className="w-2 h-2 bg-primary rounded-full"></div>
                                   </div>
                                   <span className="text-gray-700 leading-relaxed flex-1">
-                                    {subStep}
+                                    {typeof subStep === 'string' ? subStep : subStep?.description || subStep?.title || 'No description'}
                                   </span>
                                 </li>
                               ))}

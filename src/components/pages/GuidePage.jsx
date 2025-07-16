@@ -17,6 +17,27 @@ const GuidePage = () => {
   const [proTips, setProTips] = useState([]);
 const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+const validateStepsData = (data) => {
+    if (!Array.isArray(data)) return [];
+    
+    return data.map(step => ({
+      ...step,
+      subSteps: Array.isArray(step?.subSteps) 
+        ? step.subSteps.filter(subStep => subStep != null && subStep !== '')
+        : []
+    }));
+  };
+
+  const validatePrerequisitesData = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data.filter(item => item && (item.title || item.description));
+  };
+
+  const validateProTipsData = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data.filter(item => item && (item.title || item.description));
+  };
+
   const loadData = async () => {
     try {
       setLoading(true);
@@ -28,16 +49,21 @@ const [loading, setLoading] = useState(true);
         getProTips()
       ]);
       
-      setPrerequisites(prereqData);
-      setSteps(stepsData);
-      setProTips(tipsData);
+      // Validate and sanitize data before setting state
+      const validatedPrerequisites = validatePrerequisitesData(prereqData);
+      const validatedSteps = validateStepsData(stepsData);
+      const validatedProTips = validateProTipsData(tipsData);
+      
+      setPrerequisites(validatedPrerequisites);
+      setSteps(validatedSteps);
+      setProTips(validatedProTips);
     } catch (err) {
       setError("Failed to load guide content. Please try again.");
       console.error("Error loading guide data:", err);
     } finally {
       setLoading(false);
     }
-};
+  };
 
 
   useEffect(() => {

@@ -6,17 +6,46 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const getPrerequisites = async () => {
   await delay(300);
-  return [...prerequisitesData];
+  
+  // Sanitize prerequisites data
+  const sanitizedPrerequisites = prerequisitesData.filter(item => 
+    item && (item.title || item.description)
+  );
+  
+  return sanitizedPrerequisites;
 };
 
 export const getSteps = async () => {
   await delay(350);
-  return [...stepsData];
+  
+  // Sanitize steps data to ensure subSteps arrays are valid
+  const sanitizedSteps = stepsData.map(step => {
+    if (!step) return null;
+    
+    return {
+      ...step,
+      subSteps: Array.isArray(step.subSteps) 
+        ? step.subSteps.filter(subStep => 
+            subStep != null && 
+            subStep !== '' && 
+            (typeof subStep === 'string' || (subStep.title || subStep.description))
+          )
+        : []
+    };
+  }).filter(step => step != null);
+  
+  return sanitizedSteps;
 };
 
 export const getProTips = async () => {
   await delay(400);
-  return [...proTipsData];
+  
+  // Sanitize pro tips data
+  const sanitizedProTips = proTipsData.filter(item => 
+    item && (item.title || item.description)
+  );
+  
+  return sanitizedProTips;
 };
 
 export const getPrerequisiteById = async (id) => {
