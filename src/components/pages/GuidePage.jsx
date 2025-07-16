@@ -768,7 +768,7 @@ const clearValidation = () => {
 </div>
       </motion.section>
 
-      {/* Step 4: Run Tests & Catch Bugs */}
+{/* Step 4: Run Tests & Catch Bugs */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -786,46 +786,46 @@ const clearValidation = () => {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* Test Execution Controls */}
             <div className="bg-white rounded-xl shadow-card p-6 mb-8">
               <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
-                Test Execution Controls
+                Execute Your Test Suite
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <button
                   onClick={() => executeTestSuite({ mode: 'quick' })}
                   disabled={testExecutionLoading}
-                  className="flex items-center justify-center px-4 py-3 bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center px-6 py-4 bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ApperIcon name="Play" size={20} className="mr-2" />
-                  Quick Test Run
+                  Quick Run
                 </button>
                 
                 <button
                   onClick={() => executeTestSuite({ mode: 'comprehensive' })}
                   disabled={testExecutionLoading}
-                  className="flex items-center justify-center px-4 py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center px-6 py-4 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ApperIcon name="PlayCircle" size={20} className="mr-2" />
-                  Full Test Suite
+                  Full Suite
                 </button>
                 
                 <button
                   onClick={() => executeTestSuite({ mode: 'smart', includeScreenshots: true })}
                   disabled={testExecutionLoading}
-                  className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ApperIcon name="Zap" size={20} className="mr-2" />
-                  Smart Execution
+                  One-Click Execute
                 </button>
               </div>
 
               {testExecutionLoading && (
                 <div className="flex items-center justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                  <span className="ml-3 text-gray-600">Executing tests...</span>
+                  <span className="ml-3 text-gray-600">Running tests...</span>
                 </div>
               )}
 
@@ -853,11 +853,8 @@ const clearValidation = () => {
                       className="flex items-center px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg transition-colors"
                     >
                       <ApperIcon name="Bug" size={16} className="mr-2" />
-                      Generate Bug Report
+                      Bug Report
                     </button>
-                    <span className="text-sm text-gray-600">
-                      {testExecutionData.summary?.totalTests || 0} tests executed
-                    </span>
                   </div>
                   <button
                     onClick={clearTestExecution}
@@ -869,7 +866,7 @@ const clearValidation = () => {
               )}
             </div>
 
-            {/* Test Execution Results */}
+            {/* Test Results */}
             {testExecutionData && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -878,177 +875,125 @@ const clearValidation = () => {
                 className="bg-white rounded-xl shadow-card p-6"
               >
                 <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
-                  Test Execution Results
+                  Test Results
                 </h3>
 
-                {/* Summary Dashboard */}
+                {/* Quick Summary */}
                 {testExecutionData.summary && (
-                  <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Test Summary</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="bg-green-50 rounded-lg p-4">
-                        <div className="text-sm text-green-600 mb-1">Tests Passed</div>
-                        <div className="font-semibold text-green-900">{testExecutionData.summary.passed}</div>
-                      </div>
-                      <div className="bg-red-50 rounded-lg p-4">
-                        <div className="text-sm text-red-600 mb-1">Tests Failed</div>
-                        <div className="font-semibold text-red-900">{testExecutionData.summary.failed}</div>
-                      </div>
-                      <div className="bg-blue-50 rounded-lg p-4">
-                        <div className="text-sm text-blue-600 mb-1">Total Tests</div>
-                        <div className="font-semibold text-blue-900">{testExecutionData.summary.totalTests}</div>
-                      </div>
-                      <div className="bg-purple-50 rounded-lg p-4">
-                        <div className="text-sm text-purple-600 mb-1">Success Rate</div>
-                        <div className="font-semibold text-purple-900">{testExecutionData.summary.successRate}%</div>
-                      </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="bg-green-50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-green-900">{testExecutionData.summary.passed}</div>
+                      <div className="text-sm text-green-600">Passed</div>
+                    </div>
+                    <div className="bg-red-50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-red-900">{testExecutionData.summary.failed}</div>
+                      <div className="text-sm text-red-600">Failed</div>
+                    </div>
+                    <div className="bg-blue-50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-blue-900">{testExecutionData.summary.totalTests}</div>
+                      <div className="text-sm text-blue-600">Total</div>
+                    </div>
+                    <div className="bg-purple-50 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-purple-900">{testExecutionData.summary.successRate}%</div>
+                      <div className="text-sm text-purple-600">Success Rate</div>
                     </div>
                   </div>
                 )}
 
-                {/* Detailed Test Results */}
+                {/* Test Results List */}
                 {testExecutionData.testResults && testExecutionData.testResults.length > 0 && (
-                  <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Detailed Results</h4>
-                    <div className="space-y-4">
-                      {testExecutionData.testResults.map((result, index) => (
-                        <div key={index} className="border border-gray-200 rounded-lg p-4">
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex items-center">
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3 ${
-                                result.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                              }`}>
-                                {result.passed ? <ApperIcon name="Check" size={16} /> : <ApperIcon name="X" size={16} />}
-                              </div>
-                              <div>
-                                <h5 className="font-semibold text-gray-800">{result.testName}</h5>
-                                <p className="text-sm text-gray-600">{result.description}</p>
-                              </div>
-                            </div>
-                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              result.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  <div className="space-y-3">
+                    {testExecutionData.testResults.map((result, index) => (
+                      <div key={index} className={`border rounded-lg p-4 ${
+                        result.passed ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'
+                      }`}>
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center">
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 ${
+                              result.passed ? 'bg-green-100' : 'bg-red-100'
                             }`}>
-                              {result.passed ? 'Passed' : 'Failed'}
-                            </span>
+                              {result.passed ? 
+                                <ApperIcon name="Check" size={14} className="text-green-600" /> : 
+                                <ApperIcon name="X" size={14} className="text-red-600" />
+                              }
+                            </div>
+                            <div>
+                              <h5 className="font-semibold text-gray-800">{result.testName}</h5>
+                              <p className="text-sm text-gray-600">{result.description}</p>
+                            </div>
                           </div>
-                          
-                          {result.screenshot && (
-                            <div className="mb-3">
-                              <div className="text-sm font-medium text-gray-700 mb-1">Screenshot</div>
-                              <div className="bg-gray-50 rounded p-2 text-sm text-gray-600">
-                                <ApperIcon name="Camera" size={16} className="inline mr-2" />
-                                {result.screenshot}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {result.errorMessage && (
-                            <div className="mb-3">
-                              <div className="text-sm font-medium text-red-700 mb-1">Error Message</div>
-                              <div className="bg-red-50 rounded p-2 text-sm text-red-800 font-mono">
-                                {result.errorMessage}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {result.assertions && result.assertions.length > 0 && (
-                            <div className="mb-3">
-                              <div className="text-sm font-medium text-gray-700 mb-1">Assertions</div>
-                              <div className="space-y-1">
-                                {result.assertions.map((assertion, assertIndex) => (
-                                  <div key={assertIndex} className="flex items-center text-sm">
-                                    <ApperIcon 
-                                      name={assertion.passed ? "CheckCircle" : "XCircle"} 
-                                      size={14} 
-                                      className={`mr-2 ${assertion.passed ? 'text-green-600' : 'text-red-600'}`} 
-                                    />
-                                    <span className="text-gray-700">{assertion.message}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {result.executionTime && (
-                            <div className="text-xs text-gray-500">
-                              Execution time: {result.executionTime}ms
-                            </div>
-                          )}
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                            result.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                          }`}>
+                            {result.passed ? 'Passed' : 'Failed'}
+                          </span>
                         </div>
-                      ))}
-                    </div>
+                        
+                        {result.screenshot && (
+                          <div className="mt-3 flex items-center text-sm text-gray-600">
+                            <ApperIcon name="Camera" size={16} className="mr-2" />
+                            Screenshot: {result.screenshot}
+                          </div>
+                        )}
+                        
+                        {result.errorMessage && (
+                          <div className="mt-3">
+                            <div className="text-sm font-medium text-red-700 mb-1">Error:</div>
+                            <div className="bg-red-100 rounded p-2 text-sm text-red-800 font-mono">
+                              {result.errorMessage}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {result.assertions && result.assertions.length > 0 && (
+                          <div className="mt-3">
+                            <div className="text-sm font-medium text-gray-700 mb-1">Assertions:</div>
+                            <div className="space-y-1">
+                              {result.assertions.map((assertion, assertIndex) => (
+                                <div key={assertIndex} className="flex items-center text-sm">
+                                  <ApperIcon 
+                                    name={assertion.passed ? "CheckCircle" : "XCircle"} 
+                                    size={12} 
+                                    className={`mr-2 ${assertion.passed ? 'text-green-600' : 'text-red-600'}`} 
+                                  />
+                                  <span className="text-gray-700">{assertion.message}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 )}
 
-                {/* Bug Report Section */}
+                {/* Bugs Found */}
                 {testExecutionData.bugs && testExecutionData.bugs.length > 0 && (
-                  <div className="mb-8">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Bugs Detected</h4>
-                    <div className="space-y-4">
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                      <ApperIcon name="Bug" size={20} className="text-red-600 mr-2" />
+                      Bugs Found ({testExecutionData.bugs.length})
+                    </h4>
+                    <div className="space-y-3">
                       {testExecutionData.bugs.map((bug, index) => (
                         <div key={index} className="border border-red-200 rounded-lg p-4 bg-red-50">
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex items-center">
-                              <ApperIcon name="Bug" size={20} className="text-red-600 mr-3" />
-                              <div>
-                                <h5 className="font-semibold text-red-800">{bug.title}</h5>
-                                <p className="text-sm text-red-600">{bug.description}</p>
-                              </div>
-                            </div>
+                          <div className="flex items-start justify-between mb-2">
+                            <h5 className="font-semibold text-red-800">{bug.title}</h5>
                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                               bug.severity === 'high' ? 'bg-red-100 text-red-800' : 
                               bug.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
                               'bg-blue-100 text-blue-800'
                             }`}>
-                              {bug.severity} priority
+                              {bug.severity}
                             </span>
                           </div>
-                          
-                          {bug.location && (
-                            <div className="mb-3">
-                              <div className="text-sm font-medium text-red-700 mb-1">Location</div>
-                              <div className="text-sm text-red-600 font-mono">{bug.location}</div>
-                            </div>
-                          )}
-                          
-                          {bug.reproduction && (
-                            <div className="mb-3">
-                              <div className="text-sm font-medium text-red-700 mb-1">How to Reproduce</div>
-                              <div className="text-sm text-red-600">{bug.reproduction}</div>
-                            </div>
-                          )}
-                          
+                          <p className="text-sm text-red-600 mb-2">{bug.description}</p>
                           {bug.suggestion && (
-                            <div>
-                              <div className="text-sm font-medium text-red-700 mb-1">Suggested Fix</div>
-                              <div className="text-sm text-red-600">{bug.suggestion}</div>
-                            </div>
+                            <p className="text-sm text-red-700 font-medium">Fix: {bug.suggestion}</p>
                           )}
                         </div>
                       ))}
                     </div>
-                  </div>
-                )}
-
-                {/* Execution Details */}
-                {testExecutionData.executionDetails && (
-                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                    <div className="flex items-center mb-2">
-                      <ApperIcon name="Settings" size={16} className="text-gray-600 mr-2" />
-                      <span className="text-sm font-medium text-gray-800">Execution Details</span>
-                    </div>
-                    <div className="text-sm text-gray-700">
-                      Mode: {testExecutionData.executionDetails.mode} | 
-                      Environment: {testExecutionData.executionDetails.environment} | 
-                      Browser: {testExecutionData.executionDetails.browser} | 
-                      Screenshots: {testExecutionData.executionDetails.screenshotsEnabled ? 'Enabled' : 'Disabled'}
-                    </div>
-                  </div>
-                )}
-
-                {testExecutionData.timestamp && (
-                  <div className="mt-4 text-xs text-gray-500 text-right">
-                    Executed: {new Date(testExecutionData.timestamp).toLocaleString()}
                   </div>
                 )}
               </motion.div>
