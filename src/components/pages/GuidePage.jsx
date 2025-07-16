@@ -475,13 +475,15 @@ const clearValidation = () => {
         className="py-16 bg-gradient-to-br from-green-50 to-emerald-100"
       >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+<div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
               Step 3: AI Creates Executable Test Steps
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               AI processes your validated flow and generates optimized test steps with minimal actions, 
-              proper element locators, smart assertions, and complete test workflows from start to finish.
+              proper element locators and interactions, smartly adding success/failure assertions with specific messages, 
+              and complete test workflows from start to finish. Review and refine — customize test steps if needed. 
+              Your test suite is ready — no coding required!
             </p>
           </div>
 
