@@ -115,20 +115,77 @@
     "codeExample": "# Generated test types:\n# - Success message validation\n# - Error handling scenarios\n# - Field requirement checks\n# - Navigation flow tests\n# - Comprehensive test coverage",
     "timeEstimate": "5-10 minutes"
   },
-  {
+{
     "Id": 3,
-    "number": 3,
-    "title": "Generate Comprehensive Test Cases",
-    "description": "Based on your recording, AutoTester generates multiple test scenarios covering positive cases, edge cases, and error conditions.",
-    "subSteps": [
-      "AI generates positive test cases for happy paths",
-      "Creates edge case scenarios for boundary testing",
-      "Generates error condition tests for validation",
-      "Produces accessibility and usability tests",
-      "Creates performance and load test suggestions"
+    "title": "Step 3: AI Creates Executable Test Steps",
+    "description": "AI processes your validated flow and generates optimized test steps with minimal actions, proper element locators and interactions, smartly adding success/failure assertions with specific messages, and complete test workflows from start to finish. Review and refine — customize test steps if needed. Your test suite is ready — no coding required!",
+    "order": 3,
+    "category": "generation",
+    "duration": "3-5 minutes",
+    "difficulty": "easy",
+    "icon": "Zap",
+    "isCompleted": false,
+    "tips": [
+      "AI optimizes test steps to use minimal actions while maintaining comprehensive coverage",
+      "Element locators are automatically generated for reliable test execution",
+      "Smart assertions include specific success and failure messages",
+      "Complete workflows are created from start to finish",
+      "Review and customize test steps to match your specific requirements"
     ],
-    "codeExample": "# Generated test types:\n# - Happy path tests\n# - Validation tests\n# - Error handling tests\n# - Edge case scenarios",
-    "timeEstimate": "2-3 minutes"
+    "subSteps": [
+      {
+        "title": "AI Processes Validated Flow",
+        "description": "AutoTester's AI analyzes your validation results and application flow",
+        "details": [
+          "Processes validation data from Step 2",
+          "Identifies key user interactions and workflows",
+          "Maps out optimal test execution paths",
+          "Determines required assertions and checkpoints"
+        ]
+      },
+      {
+        "title": "Generate Optimized Test Steps",
+        "description": "AI creates executable test steps with minimal actions and maximum coverage",
+        "options": [
+          "Minimal Actions - Focus on essential test steps only",
+          "Comprehensive - Include detailed validation and edge cases",
+          "Smart Generation - AI-optimized balance of coverage and efficiency"
+        ]
+      },
+      {
+        "title": "Smart Assertions & Element Locators",
+        "description": "AI automatically generates reliable element locators and meaningful assertions",
+        "features": [
+          "✅ Proper element locators for consistent test execution",
+          "✅ Success/failure assertions with specific messages",
+          "✅ Smart element detection and interaction patterns",
+          "✅ Automated assertion generation based on expected behavior"
+        ]
+      },
+      {
+        "title": "Complete Test Workflows",
+        "description": "AI creates end-to-end test workflows from start to finish",
+        "workflow": [
+          "Navigation and setup steps",
+          "User interaction sequences",
+          "Data validation and verification",
+          "Error handling and recovery testing",
+          "Complete user journey validation"
+        ]
+      },
+      {
+        "title": "Review & Refine",
+        "description": "Customize generated test steps to match your specific requirements",
+        "actions": [
+          "Review AI-generated test steps and workflows",
+          "Customize test parameters and expected outcomes",
+          "Export test suite in ready-to-use format",
+          "No coding required - everything is generated automatically"
+        ]
+      }
+    ],
+    "codeExample": "# AI-generated test features:\n# - Optimized test steps with minimal actions\n# - Proper element locators and interactions\n# - Smart assertions with specific messages\n# - Complete workflows from start to finish\n# - Ready-to-use test suite",
+    "timeEstimate": "3-5 minutes"
   },
   {
     "Id": 4,
