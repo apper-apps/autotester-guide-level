@@ -49,22 +49,71 @@
       }
     ]
   },
-  {
+{
     "Id": 2,
-    "title": "Step 2: Create Test Project",
-    "Id": 2,
-    "number": 2,
-    "title": "AI Analyzes Your Recording",
-    "description": "AutoTester's AI engine analyzes your recorded interactions to understand your application's behavior, UI patterns, and user workflows.",
-    "subSteps": [
-      "AI processes your recorded user interactions",
-      "Identifies form fields, buttons, and navigation patterns",
-      "Maps out user workflows and business logic",
-      "Detects validation rules and error scenarios",
-      "Understands application structure and dependencies"
+    "title": "Step 2: Validate Flow & Generate Test Cases",
+    "description": "Review your recorded flow and let AutoTester's AI analyze everything you captured to generate comprehensive test scenarios. This step validates your application's behavior and creates detailed test cases covering success paths, error handling, field requirements, and navigation flows.",
+    "order": 2,
+    "category": "validation",
+    "duration": "5-10 minutes",
+    "difficulty": "medium",
+    "icon": "CheckCircle",
+    "isCompleted": false,
+    "tips": [
+      "Use the validation controls to test specific aspects of your application",
+      "The 'Generate All Tests' button creates comprehensive test coverage",
+      "Review validation results to understand what AutoTester detected",
+      "Success message validation ensures positive user feedback is working",
+      "Error handling validation checks that failures are properly managed"
     ],
-    "codeExample": "# AI automatically detects:\n# - Form validations\n# - Navigation flows\n# - Error handling\n# - Success scenarios",
-    "timeEstimate": "1-2 minutes"
+    "subSteps": [
+      {
+        "title": "Review Recorded Flow",
+        "description": "AutoTester analyzes your complete recording to understand application behavior",
+        "details": [
+          "AI processes all your recorded user interactions",
+          "Identifies form fields, buttons, and navigation patterns",
+          "Maps out user workflows and business logic",
+          "Detects validation rules and error scenarios",
+          "Understands application structure and dependencies"
+        ]
+      },
+      {
+        "title": "Run Validation Tests",
+        "description": "Use the validation controls to test specific aspects of your application",
+        "options": [
+          "Success Messages - Validates positive user feedback",
+          "Error Handling - Tests failure scenarios and recovery",
+          "Field Requirements - Checks form validation and required fields",
+          "Navigation Flows - Verifies user journey paths work correctly",
+          "Generate All Tests - Creates comprehensive test coverage"
+        ]
+      },
+      {
+        "title": "Generate Comprehensive Test Cases",
+        "description": "AutoTester creates detailed test scenarios based on your recording",
+        "requirements": [
+          "✅ Happy path tests for successful user journeys",
+          "✅ Edge case scenarios for boundary testing",
+          "✅ Error condition tests for validation failures",
+          "✅ Field requirement tests for form validation",
+          "✅ Navigation flow tests for user journey verification"
+        ]
+      },
+      {
+        "title": "Review Test Results",
+        "description": "Analyze the generated validation results and test case details",
+        "actions": [
+          "Review validation summary with pass/fail counts",
+          "Examine detailed results for each test category",
+          "Check individual test scenarios and their outcomes",
+          "Identify any areas that need attention or improvement",
+          "Use timestamp information to track test generation"
+        ]
+      }
+    ],
+    "codeExample": "# Generated test types:\n# - Success message validation\n# - Error handling scenarios\n# - Field requirement checks\n# - Navigation flow tests\n# - Comprehensive test coverage",
+    "timeEstimate": "5-10 minutes"
   },
   {
     "Id": 3,
