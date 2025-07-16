@@ -9,7 +9,7 @@ import Header from "@/components/organisms/Header";
 import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
-import { generateExecutableTestSteps, generateTestCases, getPrerequisites, getProTips, getSteps, validateErrorHandling, validateFieldRequirements, validateNavigationFlows, validateSuccessMessages } from "@/services/api/guideService";
+import { executeTests, generateBugReport, generateExecutableTestSteps, generateTestCases, getPrerequisites, getProTips, getSteps, validateErrorHandling, validateFieldRequirements, validateNavigationFlows, validateSuccessMessages } from "@/services/api/guideService";
 
 const GuidePage = () => {
   const [prerequisites, setPrerequisites] = useState([]);
@@ -22,7 +22,10 @@ const GuidePage = () => {
 const [validationError, setValidationError] = useState("");
   const [testStepsData, setTestStepsData] = useState(null);
   const [testStepsLoading, setTestStepsLoading] = useState(false);
-  const [testStepsError, setTestStepsError] = useState("");
+const [testStepsError, setTestStepsError] = useState("");
+  const [testExecutionData, setTestExecutionData] = useState(null);
+  const [testExecutionLoading, setTestExecutionLoading] = useState(false);
+  const [testExecutionError, setTestExecutionError] = useState("");
 const validateStepsData = (data) => {
     if (!Array.isArray(data)) return [];
     
@@ -129,6 +132,59 @@ const clearValidation = () => {
   const clearTestSteps = () => {
     setTestStepsData(null);
     setTestStepsError("");
+};
+
+  const executeTestSuite = async (options = {}) => {
+    try {
+      setTestExecutionLoading(true);
+      setTestExecutionError("");
+      
+      const result = await executeTests(options);
+      setTestExecutionData(result);
+    } catch (err) {
+      setTestExecutionError("Failed to execute tests. Please try again.");
+      console.error("Error executing tests:", err);
+    } finally {
+      setTestExecutionLoading(false);
+    }
+  };
+
+  const clearTestExecution = () => {
+    setTestExecutionData(null);
+    setTestExecutionError("");
+  };
+
+  const downloadTestResults = () => {
+    if (!testExecutionData) return;
+    
+    const dataStr = JSON.stringify(testExecutionData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `test-results-${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  };
+
+  const generateBugReportData = async () => {
+    if (!testExecutionData) return;
+    
+    try {
+      const bugReport = await generateBugReport(testExecutionData);
+      const dataStr = JSON.stringify(bugReport, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      
+      const exportFileDefaultName = `bug-report-${new Date().toISOString().split('T')[0]}.json`;
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+    } catch (err) {
+      console.error("Error generating bug report:", err);
+    }
   };
 
   const downloadTestSteps = () => {
@@ -704,6 +760,295 @@ const clearValidation = () => {
                 {testStepsData.timestamp && (
                   <div className="mt-4 text-xs text-gray-500 text-right">
                     Generated: {new Date(testStepsData.timestamp).toLocaleString()}
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </div>
+</div>
+      </motion.section>
+
+      {/* Step 4: Run Tests & Catch Bugs */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="py-16 bg-gradient-to-br from-purple-50 to-pink-100"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Step 4: Run Tests & Catch Bugs
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Execute your test suite with one click. Get detailed results showing what passed and what failed, 
+              screenshots of any issues, specific error messages and assertions. Fix bugs before users find them.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            {/* Test Execution Controls */}
+            <div className="bg-white rounded-xl shadow-card p-6 mb-8">
+              <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
+                Test Execution Controls
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <button
+                  onClick={() => executeTestSuite({ mode: 'quick' })}
+                  disabled={testExecutionLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="Play" size={20} className="mr-2" />
+                  Quick Test Run
+                </button>
+                
+                <button
+                  onClick={() => executeTestSuite({ mode: 'comprehensive' })}
+                  disabled={testExecutionLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="PlayCircle" size={20} className="mr-2" />
+                  Full Test Suite
+                </button>
+                
+                <button
+                  onClick={() => executeTestSuite({ mode: 'smart', includeScreenshots: true })}
+                  disabled={testExecutionLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="Zap" size={20} className="mr-2" />
+                  Smart Execution
+                </button>
+              </div>
+
+              {testExecutionLoading && (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  <span className="ml-3 text-gray-600">Executing tests...</span>
+                </div>
+              )}
+
+              {testExecutionError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <div className="flex items-center">
+                    <ApperIcon name="AlertTriangle" size={20} className="text-red-600 mr-2" />
+                    <span className="text-red-800">{testExecutionError}</span>
+                  </div>
+                </div>
+              )}
+
+              {testExecutionData && (
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={downloadTestResults}
+                      className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors"
+                    >
+                      <ApperIcon name="Download" size={16} className="mr-2" />
+                      Export Results
+                    </button>
+                    <button
+                      onClick={generateBugReportData}
+                      className="flex items-center px-4 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg transition-colors"
+                    >
+                      <ApperIcon name="Bug" size={16} className="mr-2" />
+                      Generate Bug Report
+                    </button>
+                    <span className="text-sm text-gray-600">
+                      {testExecutionData.summary?.totalTests || 0} tests executed
+                    </span>
+                  </div>
+                  <button
+                    onClick={clearTestExecution}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <ApperIcon name="X" size={20} />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Test Execution Results */}
+            {testExecutionData && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-xl shadow-card p-6"
+              >
+                <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
+                  Test Execution Results
+                </h3>
+
+                {/* Summary Dashboard */}
+                {testExecutionData.summary && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Test Summary</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <div className="text-sm text-green-600 mb-1">Tests Passed</div>
+                        <div className="font-semibold text-green-900">{testExecutionData.summary.passed}</div>
+                      </div>
+                      <div className="bg-red-50 rounded-lg p-4">
+                        <div className="text-sm text-red-600 mb-1">Tests Failed</div>
+                        <div className="font-semibold text-red-900">{testExecutionData.summary.failed}</div>
+                      </div>
+                      <div className="bg-blue-50 rounded-lg p-4">
+                        <div className="text-sm text-blue-600 mb-1">Total Tests</div>
+                        <div className="font-semibold text-blue-900">{testExecutionData.summary.totalTests}</div>
+                      </div>
+                      <div className="bg-purple-50 rounded-lg p-4">
+                        <div className="text-sm text-purple-600 mb-1">Success Rate</div>
+                        <div className="font-semibold text-purple-900">{testExecutionData.summary.successRate}%</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Detailed Test Results */}
+                {testExecutionData.testResults && testExecutionData.testResults.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Detailed Results</h4>
+                    <div className="space-y-4">
+                      {testExecutionData.testResults.map((result, index) => (
+                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3 ${
+                                result.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                              }`}>
+                                {result.passed ? <ApperIcon name="Check" size={16} /> : <ApperIcon name="X" size={16} />}
+                              </div>
+                              <div>
+                                <h5 className="font-semibold text-gray-800">{result.testName}</h5>
+                                <p className="text-sm text-gray-600">{result.description}</p>
+                              </div>
+                            </div>
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              result.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            }`}>
+                              {result.passed ? 'Passed' : 'Failed'}
+                            </span>
+                          </div>
+                          
+                          {result.screenshot && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-gray-700 mb-1">Screenshot</div>
+                              <div className="bg-gray-50 rounded p-2 text-sm text-gray-600">
+                                <ApperIcon name="Camera" size={16} className="inline mr-2" />
+                                {result.screenshot}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {result.errorMessage && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-red-700 mb-1">Error Message</div>
+                              <div className="bg-red-50 rounded p-2 text-sm text-red-800 font-mono">
+                                {result.errorMessage}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {result.assertions && result.assertions.length > 0 && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-gray-700 mb-1">Assertions</div>
+                              <div className="space-y-1">
+                                {result.assertions.map((assertion, assertIndex) => (
+                                  <div key={assertIndex} className="flex items-center text-sm">
+                                    <ApperIcon 
+                                      name={assertion.passed ? "CheckCircle" : "XCircle"} 
+                                      size={14} 
+                                      className={`mr-2 ${assertion.passed ? 'text-green-600' : 'text-red-600'}`} 
+                                    />
+                                    <span className="text-gray-700">{assertion.message}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {result.executionTime && (
+                            <div className="text-xs text-gray-500">
+                              Execution time: {result.executionTime}ms
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Bug Report Section */}
+                {testExecutionData.bugs && testExecutionData.bugs.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Bugs Detected</h4>
+                    <div className="space-y-4">
+                      {testExecutionData.bugs.map((bug, index) => (
+                        <div key={index} className="border border-red-200 rounded-lg p-4 bg-red-50">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center">
+                              <ApperIcon name="Bug" size={20} className="text-red-600 mr-3" />
+                              <div>
+                                <h5 className="font-semibold text-red-800">{bug.title}</h5>
+                                <p className="text-sm text-red-600">{bug.description}</p>
+                              </div>
+                            </div>
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              bug.severity === 'high' ? 'bg-red-100 text-red-800' : 
+                              bug.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-blue-100 text-blue-800'
+                            }`}>
+                              {bug.severity} priority
+                            </span>
+                          </div>
+                          
+                          {bug.location && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-red-700 mb-1">Location</div>
+                              <div className="text-sm text-red-600 font-mono">{bug.location}</div>
+                            </div>
+                          )}
+                          
+                          {bug.reproduction && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-red-700 mb-1">How to Reproduce</div>
+                              <div className="text-sm text-red-600">{bug.reproduction}</div>
+                            </div>
+                          )}
+                          
+                          {bug.suggestion && (
+                            <div>
+                              <div className="text-sm font-medium text-red-700 mb-1">Suggested Fix</div>
+                              <div className="text-sm text-red-600">{bug.suggestion}</div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Execution Details */}
+                {testExecutionData.executionDetails && (
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center mb-2">
+                      <ApperIcon name="Settings" size={16} className="text-gray-600 mr-2" />
+                      <span className="text-sm font-medium text-gray-800">Execution Details</span>
+                    </div>
+                    <div className="text-sm text-gray-700">
+                      Mode: {testExecutionData.executionDetails.mode} | 
+                      Environment: {testExecutionData.executionDetails.environment} | 
+                      Browser: {testExecutionData.executionDetails.browser} | 
+                      Screenshots: {testExecutionData.executionDetails.screenshotsEnabled ? 'Enabled' : 'Disabled'}
+                    </div>
+                  </div>
+                )}
+
+                {testExecutionData.timestamp && (
+                  <div className="mt-4 text-xs text-gray-500 text-right">
+                    Executed: {new Date(testExecutionData.timestamp).toLocaleString()}
                   </div>
                 )}
               </motion.div>

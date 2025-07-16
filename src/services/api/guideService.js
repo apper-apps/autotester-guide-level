@@ -406,7 +406,7 @@ export const generateExecutableTestSteps = async (options = {}) => {
     workflows: workflows.length
   };
 
-  return {
+return {
     status: "generated",
     optimization,
     smartAssertions: optimization === 'smart',
@@ -417,3 +417,169 @@ export const generateExecutableTestSteps = async (options = {}) => {
     timestamp: new Date().toISOString()
   };
 };
+
+// Step 4: Run Tests & Catch Bugs
+export const executeTests = async (options = {}) => {
+  await delay(800);
+  
+  const { mode = 'smart', includeScreenshots = false } = options;
+  
+  // Simulate test execution with realistic results
+  const testResults = [
+    {
+      testName: "User Authentication Flow",
+      description: "Verify user can log in with valid credentials",
+      passed: true,
+      executionTime: 1250,
+      screenshot: includeScreenshots ? "screenshot-login-success.png" : null,
+      assertions: [
+        { message: "Login form is displayed", passed: true },
+        { message: "Valid credentials are accepted", passed: true },
+        { message: "User is redirected to dashboard", passed: true }
+      ]
+    },
+    {
+      testName: "Form Validation",
+      description: "Check required field validation on registration form",
+      passed: false,
+      executionTime: 890,
+      screenshot: includeScreenshots ? "screenshot-validation-error.png" : null,
+      errorMessage: "Element not found: [data-testid='email-error']",
+      assertions: [
+        { message: "Email field shows error for invalid format", passed: false },
+        { message: "Password field shows strength indicator", passed: true },
+        { message: "Submit button is disabled for invalid form", passed: true }
+      ]
+    },
+    {
+      testName: "Navigation Menu",
+      description: "Test main navigation functionality",
+      passed: true,
+      executionTime: 650,
+      screenshot: includeScreenshots ? "screenshot-navigation-menu.png" : null,
+      assertions: [
+        { message: "All menu items are clickable", passed: true },
+        { message: "Active menu item is highlighted", passed: true },
+        { message: "Mobile menu works correctly", passed: true }
+      ]
+    },
+    {
+      testName: "Data Loading",
+      description: "Verify data loads correctly from API",
+      passed: false,
+      executionTime: 2100,
+      screenshot: includeScreenshots ? "screenshot-data-loading-error.png" : null,
+      errorMessage: "Network timeout: Request to /api/data took longer than 5000ms",
+      assertions: [
+        { message: "Loading spinner is displayed", passed: true },
+        { message: "Data is fetched within timeout", passed: false },
+        { message: "Error state is handled gracefully", passed: true }
+      ]
+    },
+    {
+      testName: "Responsive Design",
+      description: "Test layout on different screen sizes",
+      passed: true,
+      executionTime: 1450,
+      screenshot: includeScreenshots ? "screenshot-responsive-design.png" : null,
+      assertions: [
+        { message: "Mobile layout renders correctly", passed: true },
+        { message: "Tablet layout is properly formatted", passed: true },
+        { message: "Desktop layout uses full width", passed: true }
+      ]
+    }
+  ];
+
+  // Filter results based on mode
+  let filteredResults = testResults;
+  if (mode === 'quick') {
+    filteredResults = testResults.slice(0, 3);
+  }
+
+  // Generate summary
+  const passed = filteredResults.filter(r => r.passed).length;
+  const failed = filteredResults.filter(r => !r.passed).length;
+  const totalTests = filteredResults.length;
+  const successRate = Math.round((passed / totalTests) * 100);
+
+  // Identify bugs from failed tests
+  const bugs = filteredResults
+    .filter(r => !r.passed)
+    .map(result => ({
+      title: `Bug in ${result.testName}`,
+      description: result.errorMessage || "Test failed without specific error message",
+      severity: result.testName.includes('Authentication') ? 'high' : 'medium',
+      location: result.testName.includes('Form') ? 'src/components/forms/RegistrationForm.jsx' : 'src/services/api/dataService.js',
+      reproduction: `Execute test: ${result.testName}`,
+      suggestion: result.testName.includes('Form') ? 
+        'Add proper data-testid attributes to error elements' : 
+        'Increase API timeout or add retry logic'
+    }));
+
+  return {
+    status: "executed",
+    summary: {
+      passed,
+      failed,
+      totalTests,
+      successRate
+    },
+    testResults: filteredResults,
+    bugs,
+    executionDetails: {
+      mode,
+      environment: "test",
+      browser: "Chrome 120.0",
+      screenshotsEnabled: includeScreenshots
+    },
+    timestamp: new Date().toISOString()
+  };
+};
+
+export const generateBugReport = async (testExecutionData) => {
+  await delay(300);
+  
+  const { bugs, summary, timestamp } = testExecutionData;
+  
+  const bugReport = {
+    reportId: `BR-${Date.now()}`,
+    generatedAt: new Date().toISOString(),
+    testExecutionId: timestamp,
+    summary: {
+      totalBugs: bugs.length,
+      highPriority: bugs.filter(b => b.severity === 'high').length,
+      mediumPriority: bugs.filter(b => b.severity === 'medium').length,
+      lowPriority: bugs.filter(b => b.severity === 'low').length
+    },
+    testSummary: summary,
+    detailedBugs: bugs.map((bug, index) => ({
+      bugId: `BUG-${Date.now()}-${index + 1}`,
+      ...bug,
+      status: 'open',
+      assignee: null,
+      estimatedFixTime: bug.severity === 'high' ? '2 hours' : '1 hour'
+    })),
+    recommendations: [
+      {
+        category: 'Testing',
+        suggestion: 'Add more comprehensive element selectors to reduce locator failures'
+      },
+      {
+        category: 'Performance',
+        suggestion: 'Implement timeout handling for API calls to prevent test failures'
+      },
+      {
+        category: 'UI/UX',
+        suggestion: 'Ensure all interactive elements have proper accessibility attributes'
+      }
+    ],
+    nextSteps: [
+      'Review and prioritize bugs based on severity',
+      'Assign bugs to development team',
+      'Create tracking tickets in project management system',
+      'Schedule bug fixes in next sprint',
+      'Re-run tests after fixes are implemented'
+    ]
+  };
+  
+  return bugReport;
