@@ -223,6 +223,197 @@ export const generateTestCases = async () => {
     overallStatus: "validation_complete",
     timestamp: new Date().toISOString()
   };
+return testCases;
+};
+
+// Step 3: AI Creates Executable Test Steps
+export const generateExecutableTestSteps = async (options = {}) => {
+  await delay(500);
   
-  return testCases;
+  const { optimization = 'smart' } = options;
+  
+  // Generate optimized test steps based on validation results
+  const testSteps = [
+    {
+      id: 1,
+      action: "Navigate to Application",
+      description: "Open the application URL and verify page loads correctly",
+      type: "action",
+      elementLocator: "body",
+      expectedResult: "Application homepage is displayed",
+      assertions: [
+        "Page title contains 'AutoTester'",
+        "Main navigation is visible",
+        "Page loads within 3 seconds"
+      ]
+    },
+    {
+      id: 2,
+      action: "Verify Prerequisites Section",
+      description: "Check that all prerequisites are displayed with proper formatting",
+      type: "assertion",
+      elementLocator: "[data-testid='prerequisites-section']",
+      expectedResult: "Prerequisites section shows all required items",
+      assertions: [
+        "Prerequisites section is visible",
+        "All prerequisite items have titles and descriptions",
+        "Section heading is properly formatted"
+      ]
+    },
+    {
+      id: 3,
+      action: "Navigate Through Steps",
+      description: "Verify each step in the guide can be accessed and displays correctly",
+      type: "action",
+      elementLocator: "[data-testid='steps-list']",
+      expectedResult: "All guide steps are accessible and well-formatted",
+      assertions: [
+        "Steps are numbered sequentially",
+        "Each step has a clear title and description",
+        "Sub-steps are properly indented"
+      ]
+    },
+    {
+      id: 4,
+      action: "Test Validation Controls",
+      description: "Interact with validation buttons and verify responses",
+      type: "action",
+      elementLocator: "[data-testid='validation-controls']",
+      expectedResult: "Validation controls work as expected",
+      assertions: [
+        "Success message validation runs without errors",
+        "Error handling validation shows proper results",
+        "Field requirements validation completes successfully"
+      ]
+    },
+    {
+      id: 5,
+      action: "Generate Test Cases",
+      description: "Run complete test case generation and verify output",
+      type: "action",
+      elementLocator: "button:contains('Generate All Tests')",
+      expectedResult: "Test cases are generated and displayed",
+      assertions: [
+        "Test generation completes without errors",
+        "Results are displayed in organized sections",
+        "Summary statistics are accurate"
+      ]
+    },
+    {
+      id: 6,
+      action: "Generate Test Steps",
+      description: "Create executable test steps and verify output quality",
+      type: "action",
+      elementLocator: "button:contains('Smart Generation')",
+      expectedResult: "Test steps are generated with proper structure",
+      assertions: [
+        "Test steps have clear actions and descriptions",
+        "Element locators are specific and reliable",
+        "Assertions are meaningful and testable"
+      ]
+    },
+    {
+      id: 7,
+      action: "Export Test Results",
+      description: "Download generated test steps and verify file format",
+      type: "action",
+      elementLocator: "button:contains('Export Test Steps')",
+      expectedResult: "Test steps are exported in JSON format",
+      assertions: [
+        "Export button is enabled after generation",
+        "Downloaded file contains valid JSON",
+        "All test data is preserved in export"
+      ]
+    },
+    {
+      id: 8,
+      action: "Verify Error Handling",
+      description: "Test error scenarios and recovery mechanisms",
+      type: "assertion",
+      elementLocator: "[data-testid='error-display']",
+      expectedResult: "Errors are handled gracefully with recovery options",
+      assertions: [
+        "Error messages are user-friendly",
+        "Retry mechanisms work correctly",
+        "Loading states are properly managed"
+      ]
+    }
+  ];
+
+  // Filter steps based on optimization type
+  let optimizedSteps = testSteps;
+  if (optimization === 'minimal') {
+    optimizedSteps = testSteps.filter(step => 
+      ['Navigate to Application', 'Generate Test Cases', 'Export Test Results'].includes(step.action)
+    );
+  } else if (optimization === 'comprehensive') {
+    // Add additional detailed steps for comprehensive testing
+    optimizedSteps = [
+      ...testSteps,
+      {
+        id: 9,
+        action: "Test Responsive Design",
+        description: "Verify application works on different screen sizes",
+        type: "assertion",
+        elementLocator: "body",
+        expectedResult: "Application is responsive across devices",
+        assertions: [
+          "Layout adapts to mobile screens",
+          "Navigation remains accessible",
+          "Content is readable on all devices"
+        ]
+      },
+      {
+        id: 10,
+        action: "Verify Accessibility",
+        description: "Check accessibility features and compliance",
+        type: "assertion",
+        elementLocator: "[role='main']",
+        expectedResult: "Application meets accessibility standards",
+        assertions: [
+          "All interactive elements are keyboard accessible",
+          "Alt text is provided for images",
+          "Color contrast meets WCAG guidelines"
+        ]
+      }
+    ];
+  }
+
+  // Generate test workflows
+  const workflows = [
+    {
+      name: "End-to-End User Journey",
+      description: "Complete user flow from landing to test generation",
+      steps: [1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      name: "Validation Flow",
+      description: "Focus on validation and test case generation",
+      steps: [1, 4, 5]
+    },
+    {
+      name: "Error Handling Flow",
+      description: "Test error scenarios and recovery",
+      steps: [1, 8]
+    }
+  ];
+
+  // Generate summary statistics
+  const summary = {
+    totalSteps: optimizedSteps.length,
+    assertions: optimizedSteps.reduce((total, step) => total + (step.assertions?.length || 0), 0),
+    locators: optimizedSteps.filter(step => step.elementLocator).length,
+    workflows: workflows.length
+  };
+
+  return {
+    status: "generated",
+    optimization,
+    smartAssertions: optimization === 'smart',
+    elementDetection: "auto",
+    testSteps: optimizedSteps,
+    workflows,
+    summary,
+    timestamp: new Date().toISOString()
+  };
 };

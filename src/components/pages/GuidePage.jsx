@@ -9,7 +9,7 @@ import Header from "@/components/organisms/Header";
 import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
-import { generateTestCases, getPrerequisites, getProTips, getSteps, validateErrorHandling, validateFieldRequirements, validateNavigationFlows, validateSuccessMessages } from "@/services/api/guideService";
+import { generateExecutableTestSteps, generateTestCases, getPrerequisites, getProTips, getSteps, validateErrorHandling, validateFieldRequirements, validateNavigationFlows, validateSuccessMessages } from "@/services/api/guideService";
 
 const GuidePage = () => {
   const [prerequisites, setPrerequisites] = useState([]);
@@ -19,7 +19,10 @@ const GuidePage = () => {
   const [error, setError] = useState("");
   const [validationData, setValidationData] = useState(null);
   const [validationLoading, setValidationLoading] = useState(false);
-  const [validationError, setValidationError] = useState("");
+const [validationError, setValidationError] = useState("");
+  const [testStepsData, setTestStepsData] = useState(null);
+  const [testStepsLoading, setTestStepsLoading] = useState(false);
+  const [testStepsError, setTestStepsError] = useState("");
 const validateStepsData = (data) => {
     if (!Array.isArray(data)) return [];
     
@@ -103,9 +106,43 @@ const validateStepsData = (data) => {
     }
   };
 
-  const clearValidation = () => {
+const clearValidation = () => {
     setValidationData(null);
     setValidationError("");
+  };
+
+  const generateTestSteps = async (options = {}) => {
+    try {
+      setTestStepsLoading(true);
+      setTestStepsError("");
+      
+      const result = await generateExecutableTestSteps(options);
+      setTestStepsData(result);
+    } catch (err) {
+      setTestStepsError("Failed to generate test steps. Please try again.");
+      console.error("Error generating test steps:", err);
+    } finally {
+      setTestStepsLoading(false);
+    }
+  };
+
+  const clearTestSteps = () => {
+    setTestStepsData(null);
+    setTestStepsError("");
+  };
+
+  const downloadTestSteps = () => {
+    if (!testStepsData) return;
+    
+    const dataStr = JSON.stringify(testStepsData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `test-steps-${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
   };
 
   useEffect(() => {
@@ -422,6 +459,249 @@ const validateStepsData = (data) => {
                 {validationData.timestamp && (
                   <div className="mt-4 text-xs text-gray-500 text-right">
                     Generated: {new Date(validationData.timestamp).toLocaleString()}
+                  </div>
+                )}
+              </motion.div>
+            )}
+</div>
+        </div>
+      </motion.section>
+
+      {/* Step 3: AI Creates Executable Test Steps */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="py-16 bg-gradient-to-br from-green-50 to-emerald-100"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Step 3: AI Creates Executable Test Steps
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              AI processes your validated flow and generates optimized test steps with minimal actions, 
+              proper element locators, smart assertions, and complete test workflows from start to finish.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            {/* Test Generation Controls */}
+            <div className="bg-white rounded-xl shadow-card p-6 mb-8">
+              <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
+                Generate Test Steps
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <button
+                  onClick={() => generateTestSteps({ optimization: 'minimal' })}
+                  disabled={testStepsLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-green-100 hover:bg-green-200 text-green-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="Minimize2" size={20} className="mr-2" />
+                  Minimal Actions
+                </button>
+                
+                <button
+                  onClick={() => generateTestSteps({ optimization: 'comprehensive' })}
+                  disabled={testStepsLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="List" size={20} className="mr-2" />
+                  Comprehensive
+                </button>
+                
+                <button
+                  onClick={() => generateTestSteps({ optimization: 'smart' })}
+                  disabled={testStepsLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ApperIcon name="Zap" size={20} className="mr-2" />
+                  Smart Generation
+                </button>
+              </div>
+
+              {testStepsLoading && (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                  <span className="ml-3 text-gray-600">Generating test steps...</span>
+                </div>
+              )}
+
+              {testStepsError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <div className="flex items-center">
+                    <ApperIcon name="AlertTriangle" size={20} className="text-red-600 mr-2" />
+                    <span className="text-red-800">{testStepsError}</span>
+                  </div>
+                </div>
+              )}
+
+              {testStepsData && (
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={downloadTestSteps}
+                      className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors"
+                    >
+                      <ApperIcon name="Download" size={16} className="mr-2" />
+                      Export Test Steps
+                    </button>
+                    <span className="text-sm text-gray-600">
+                      {testStepsData.testSteps?.length || 0} test steps generated
+                    </span>
+                  </div>
+                  <button
+                    onClick={clearTestSteps}
+                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <ApperIcon name="X" size={20} />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Test Steps Results */}
+            {testStepsData && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-xl shadow-card p-6"
+              >
+                <h3 className="text-xl font-display font-semibold text-gray-900 mb-6">
+                  Generated Test Steps
+                </h3>
+
+                {/* Summary */}
+                {testStepsData.summary && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Test Suite Summary</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <div className="text-sm text-green-600 mb-1">Total Steps</div>
+                        <div className="font-semibold text-green-900">{testStepsData.summary.totalSteps}</div>
+                      </div>
+                      <div className="bg-blue-50 rounded-lg p-4">
+                        <div className="text-sm text-blue-600 mb-1">Assertions</div>
+                        <div className="font-semibold text-blue-900">{testStepsData.summary.assertions}</div>
+                      </div>
+                      <div className="bg-purple-50 rounded-lg p-4">
+                        <div className="text-sm text-purple-600 mb-1">Element Locators</div>
+                        <div className="font-semibold text-purple-900">{testStepsData.summary.locators}</div>
+                      </div>
+                      <div className="bg-orange-50 rounded-lg p-4">
+                        <div className="text-sm text-orange-600 mb-1">Test Workflows</div>
+                        <div className="font-semibold text-orange-900">{testStepsData.summary.workflows}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Test Steps */}
+                {testStepsData.testSteps && testStepsData.testSteps.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Test Steps</h4>
+                    <div className="space-y-4">
+                      {testStepsData.testSteps.map((step, index) => (
+                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                                {index + 1}
+                              </div>
+                              <div>
+                                <h5 className="font-semibold text-gray-800">{step.action}</h5>
+                                <p className="text-sm text-gray-600">{step.description}</p>
+                              </div>
+                            </div>
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              step.type === 'action' ? 'bg-blue-100 text-blue-800' : 
+                              step.type === 'assertion' ? 'bg-green-100 text-green-800' : 
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {step.type}
+                            </span>
+                          </div>
+                          
+                          {step.elementLocator && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-gray-700 mb-1">Element Locator</div>
+                              <div className="bg-gray-50 rounded p-2 text-sm font-mono text-gray-800">
+                                {step.elementLocator}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {step.expectedResult && (
+                            <div className="mb-3">
+                              <div className="text-sm font-medium text-gray-700 mb-1">Expected Result</div>
+                              <div className="text-sm text-gray-600">{step.expectedResult}</div>
+                            </div>
+                          )}
+                          
+                          {step.assertions && step.assertions.length > 0 && (
+                            <div>
+                              <div className="text-sm font-medium text-gray-700 mb-1">Assertions</div>
+                              <div className="space-y-1">
+                                {step.assertions.map((assertion, assertIndex) => (
+                                  <div key={assertIndex} className="flex items-center text-sm">
+                                    <ApperIcon name="CheckCircle" size={14} className="text-green-600 mr-2" />
+                                    <span className="text-gray-700">{assertion}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Test Workflows */}
+                {testStepsData.workflows && testStepsData.workflows.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Complete Test Workflows</h4>
+                    <div className="space-y-4">
+                      {testStepsData.workflows.map((workflow, index) => (
+                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h5 className="font-semibold text-gray-800">{workflow.name}</h5>
+                            <span className="text-sm text-gray-600">{workflow.steps.length} steps</span>
+                          </div>
+                          <p className="text-sm text-gray-600 mb-3">{workflow.description}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {workflow.steps.map((stepRef, stepIndex) => (
+                              <span key={stepIndex} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                Step {stepRef}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Generation Options */}
+                {testStepsData.optimization && (
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <div className="flex items-center mb-2">
+                      <ApperIcon name="Settings" size={16} className="text-blue-600 mr-2" />
+                      <span className="text-sm font-medium text-blue-800">Generation Options</span>
+                    </div>
+                    <div className="text-sm text-blue-700">
+                      Optimization: {testStepsData.optimization} | 
+                      Smart assertions: {testStepsData.smartAssertions ? 'Enabled' : 'Disabled'} | 
+                      Element detection: {testStepsData.elementDetection || 'Auto'}
+                    </div>
+                  </div>
+                )}
+
+                {testStepsData.timestamp && (
+                  <div className="mt-4 text-xs text-gray-500 text-right">
+                    Generated: {new Date(testStepsData.timestamp).toLocaleString()}
                   </div>
                 )}
               </motion.div>
