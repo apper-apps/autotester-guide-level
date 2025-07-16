@@ -577,11 +577,10 @@ export const generateBugReport = async (testExecutionData) => {
     ],
     nextSteps: [
       'Review and prioritize bugs based on severity',
-      'Assign bugs to development team',
+'Assign bugs to development team',
       'Create tracking tickets in project management system',
       'Schedule bug fixes in next sprint',
       'Re-run tests after fixes are implemented'
-'Re-run tests after fixes are implemented'
     ]
   };
   
