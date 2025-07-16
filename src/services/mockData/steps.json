@@ -1,23 +1,57 @@
 [
   {
     "Id": 1,
-"number": 1,
-    "title": "Create Your Project & Record Complete Feature Flow",
-    "description": "Start by installing the Chrome Extension and setting up your project with all required details. Then record your complete feature workflow following our comprehensive guidelines to ensure AI can generate thorough test cases.",
-    "subSteps": [
-      "Install Chrome Extension with clickable link to Chrome Web Store",
-      "Create new project requirements (recording name, app URL, description)",
-      "Detailed recording guidelines with checkmarks:",
-      "✅ Click on ALL necessary fields (required and optional)",
-      "✅ Fill out forms completely",
-      "✅ Navigate through entire user journey",
-      "✅ Include success/error scenarios",
-      "✅ Interact with all UI elements"
+    "title": "Step 1: Create Your Project & Record Complete Feature Flow",
+    "description": "Install the AutoTester Chrome Extension and create a comprehensive recording of your web application's complete feature flow. This foundational step ensures AI can understand your app thoroughly and generate comprehensive test cases.",
+    "order": 1,
+    "category": "setup",
+    "duration": "10-15 minutes",
+    "difficulty": "easy",
+    "icon": "PlayCircle",
+    "isCompleted": false,
+    "tips": [
+      "The more complete your recording, the better AI can understand your app",
+      "Don't skip any fields or interactions - record everything",
+      "Include both success and error scenarios in your recording",
+      "Test all UI elements: buttons, dropdowns, checkboxes, forms",
+      "Make sure to navigate through the entire user journey from start to finish"
     ],
-    "codeExample": "# Pro tip callout box: \"The more complete your recording, the better AI can understand your app and generate comprehensive test cases\"",
-    "timeEstimate": "5-7 minutes"
+    "subSteps": [
+      {
+        "title": "Install the Chrome Extension",
+        "description": "Add the AutoTester Chrome Extension and pin it to your toolbar",
+        "action": "Navigate to Chrome Web Store, search for 'AutoTester', install and pin to toolbar"
+      },
+      {
+        "title": "Create a New Project",
+        "description": "Provide essential project information",
+        "details": [
+          "Recording name (e.g., 'User Login Flow')",
+          "Your app's starting URL",
+          "Brief description of your web application"
+        ]
+      },
+      {
+        "title": "Record Your Complete Feature",
+        "description": "Be thorough and comprehensive in your recording",
+        "requirements": [
+          "✅ Click on ALL necessary fields (required and optional)",
+          "✅ Fill out forms completely — don't skip any inputs", 
+          "✅ Navigate through the entire user journey from start to finish",
+          "✅ Include success/error scenarios — try both valid and invalid inputs",
+          "✅ Interact with all UI elements — buttons, dropdowns, checkboxes, etc."
+        ]
+      },
+      {
+        "title": "Stop Recording",
+        "description": "End your recording session when you've covered the complete feature",
+        "note": "Make sure you've captured every interaction and navigation path users might take"
+      }
+    ]
   },
   {
+    "Id": 2,
+    "title": "Step 2: Create Test Project",
     "Id": 2,
     "number": 2,
     "title": "AI Analyzes Your Recording",
