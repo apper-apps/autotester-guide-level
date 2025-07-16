@@ -83,18 +83,7 @@ const StepsList = ({ steps }) => {
                             </ul>
                           </div>
                         </div>
-                      )}
-                      
-                      {/* Enhanced code example section */}
-                      {step.codeExample && (
-                        <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-1">
-                          <CodeBlock
-                            code={step.codeExample}
-                            language="bash"
-                            title="💡 Pro Tip"
-                          />
-                        </div>
-                      )}
+)}
                     </div>
                   </div>
                   
