@@ -1,3 +1,4 @@
+import React from "react";
 import prerequisitesData from "@/services/mockData/prerequisites.json";
 import stepsData from "@/services/mockData/steps.json";
 import proTipsData from "@/services/mockData/proTips.json";
@@ -221,9 +222,10 @@ export const generateTestCases = async () => {
       navigationValidation
     },
     overallStatus: "validation_complete",
-    timestamp: new Date().toISOString()
+timestamp: new Date().toISOString()
   };
-return testCases;
+  
+  return testCases;
 };
 
 // Step 3: AI Creates Executable Test Steps
@@ -579,7 +581,9 @@ export const generateBugReport = async (testExecutionData) => {
       'Create tracking tickets in project management system',
       'Schedule bug fixes in next sprint',
       'Re-run tests after fixes are implemented'
+'Re-run tests after fixes are implemented'
     ]
   };
   
   return bugReport;
+};
